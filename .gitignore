@@ -1,0 +1,6 @@
+/node_modules
+/test
+/build/testSrc
+/gulp-tsc-tmp*
+.gulp-tsc-tmp*.*
+npm-debug.log*
