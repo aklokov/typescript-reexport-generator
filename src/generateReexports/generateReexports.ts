@@ -1,11 +1,12 @@
 import * as fse from 'fs-extra';
-import { normalizePath, getFilesWithStatues, generateteReexportInDir } from '.';
+import { normalizePath, getFileIsDir, generateteReexportInDir } from '.';
 
 export async function generateReexports(path: string): Promise<void> {
   path = normalizePath(path);
-  const files = await getFilesWithStatues(path);
-  const dirs = files.filter(file => file.isDirectory);
-  const dirPromises = dirs.map(dir => generateReexports(dir.path));
-  const filePromise = generateteReexportInDir(path, files);
+  const allFiles = await fse.readdir(path);
+  const fileIsDirs =  await Promise.all(allFiles.map(file => getFileIsDir(path, file)));
+  const dirs = fileIsDirs.filter(file => file.isDir);
+  const dirPromises = dirs.map(dir => generateReexports(dir.fullPath));
+  const filePromise = generateteReexportInDir(path, fileIsDirs);
   await Promise.all([...dirPromises, filePromise]);
 }
