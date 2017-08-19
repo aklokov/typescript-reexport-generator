@@ -7,7 +7,7 @@ export interface FileHasExports {
 }
 
 function isTsFile(file: string): boolean {
-  return file.endsWith('.ts') || file.endsWith('./tsx');
+  return (file.endsWith('.ts') || file.endsWith('./tsx')) && !file.endsWith('.d.ts');
 }
 
 export async function getFileHasExports(file: FileIsDir): Promise<FileHasExports> {
@@ -19,9 +19,14 @@ export async function getFileHasExports(file: FileIsDir): Promise<FileHasExports
   return createHasExports(file, hasMatch(content));
 }
 
-const exportRegex = /export[\s]*function|export[\s]*async[\s]*function|export[\s]*interface|export[\s]*type/;
+const funcRegex = /export[\s]*function|export[\s]*async[\s]*function/;
+const typeRegex = /export[\s]*interface|export[\s]*type/;
+const constRegex = /export[\s]*const[\s]*[^\s]*[\s]*=[\s]*{/;
 function hasMatch(content: string): boolean {
-  return !!exportRegex.exec(content);
+  const hasFunc = !!funcRegex.exec(content);
+  const hasType = !!typeRegex.exec(content);
+  const hasConst = !!constRegex.exec(content);
+  return hasFunc || hasType || hasConst;
 }
 
 function createHasExports(file: FileIsDir, hasExports: boolean): FileHasExports {

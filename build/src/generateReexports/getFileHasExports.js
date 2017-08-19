@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const fse = require("fs-extra");
 function isTsFile(file) {
-    return file.endsWith('.ts') || file.endsWith('./tsx');
+    return (file.endsWith('.ts') || file.endsWith('./tsx')) && !file.endsWith('.d.ts');
 }
 function getFileHasExports(file) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -22,9 +22,14 @@ function getFileHasExports(file) {
     });
 }
 exports.getFileHasExports = getFileHasExports;
-const exportRegex = /export[\s]*function|export[\s]*async[\s]*function|export[\s]*interface|export[\s]*type/;
+const funcRegex = /export[\s]*function|export[\s]*async[\s]*function/;
+const typeRegex = /export[\s]*interface|export[\s]*type/;
+const constRegex = /export[\s]*const[\s]*[^\s]*[\s]*=[\s]*{/;
 function hasMatch(content) {
-    return !!exportRegex.exec(content);
+    const hasFunc = !!funcRegex.exec(content);
+    const hasType = !!typeRegex.exec(content);
+    const hasConst = !!constRegex.exec(content);
+    return hasFunc || hasType || hasConst;
 }
 function createHasExports(file, hasExports) {
     return {

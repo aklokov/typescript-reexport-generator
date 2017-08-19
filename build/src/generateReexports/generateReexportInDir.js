@@ -35,6 +35,6 @@ function stripExtension(file) {
     return file.substr(0, lastDot);
 }
 function createReexport(file) {
-    return `export * from '.\\${file}'`;
+    return `export * from './${file}';`;
 }
 //# sourceMappingURL=generateReexportInDir.js.map

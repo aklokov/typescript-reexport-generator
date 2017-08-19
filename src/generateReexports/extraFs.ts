@@ -17,6 +17,7 @@ export async function gracefulFileWrite(path: string, content: string): Promise<
 
   try {
     await fse.writeFile(path, content);
+    console.log('Written ' + path);
   } catch (err) {
     console.log('Error writing ' + path + constants.linefeed + err);
   }

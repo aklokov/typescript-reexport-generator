@@ -27,6 +27,6 @@ function stripExtension(file: string): string {
 }
 
 function createReexport(file: string): string {
-  return `export * from '.\\${file}'`;
+  return `export * from './${file}';`;
 }
 

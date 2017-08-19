@@ -29,6 +29,7 @@ function gracefulFileWrite(path, content) {
         }
         try {
             yield fse.writeFile(path, content);
+            console.log('Written ' + path);
         }
         catch (err) {
             console.log('Error writing ' + path + _1.constants.linefeed + err);
