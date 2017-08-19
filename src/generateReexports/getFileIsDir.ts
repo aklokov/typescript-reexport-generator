@@ -9,7 +9,7 @@ export interface FileIsDir {
 
 export async function getFilesWithStatues(path: string): Promise<FileIsDir[]> {
   const files = await fse.readdir(path);
-  const results = await Promise.all(files.map(file => getFileStatus(path, file)));
+  const results = await Promise.all(files.map(file => getFileIsDir(path, file)));
   return results;
 }
 

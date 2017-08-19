@@ -6,15 +6,12 @@ export interface FileHasExports {
   hasExports: boolean;
 }
 
-
-function createHasExports(file: FileIsDir, hasExports: boolean): FileHasExports {
-  return {
-    file: file.file,
-    hasExports: false
-  };
+function isTsFile(file: string): boolean {
+  return file.endsWith('.ts') || file.endsWith('./tsx');
 }
+
 export async function getFileHasExports(file: FileIsDir): Promise<FileHasExports> {
-  if (file.isDir || !file.file.endsWith('.ts') || file.file === 'index.ts') {
+  if (file.isDir || !isTsFile(file.file) || file.file === 'index.ts') {
     return createHasExports(file, false);
   }
 
@@ -26,4 +23,11 @@ const funcRegex = /export function ([^\(]*)\(([^\)]*)\): ([^{]*)/;
 const typeRegex = /export interface (.*) {\r?\n((?:.*?|\r?\n)*?)}/;
 function hasMatch(content: string): boolean {
   return !!(funcRegex.exec(content) || typeRegex.exec(content));
+}
+
+function createHasExports(file: FileIsDir, hasExports: boolean): FileHasExports {
+  return {
+    file: file.file,
+    hasExports: false
+  };
 }
