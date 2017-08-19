@@ -17,7 +17,7 @@ function canCreateReexport(files) {
             return true;
         }
         const content = yield fse.readFile(index.fullPath, 'utf8');
-        const lines = content.split(/\r?\n|;/);
+        const lines = content.split(/\r?\n|;/).filter(line => line.length);
         const onlyReexports = !lines.find(line => !reexportsOnly(line));
         return onlyReexports;
     });
@@ -26,6 +26,6 @@ exports.canCreateReexport = canCreateReexport;
 const reexportRegex = /(export \* from '[^\']*')/;
 function reexportsOnly(line) {
     const match = reexportRegex.exec(line);
-    return match[1].trim() === line.trim();
+    return !!match && (match[1].trim() === line.trim());
 }
 //# sourceMappingURL=canCreateReexport.js.map

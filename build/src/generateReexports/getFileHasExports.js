@@ -17,20 +17,19 @@ function getFileHasExports(file) {
         if (file.isDir || !isTsFile(file.file) || file.file === 'index.ts') {
             return createHasExports(file, false);
         }
-        const content = yield fse.readFile(file.file, 'utf8');
+        const content = yield fse.readFile(file.fullPath, 'utf8');
         return createHasExports(file, hasMatch(content));
     });
 }
 exports.getFileHasExports = getFileHasExports;
-const funcRegex = /export function ([^\(]*)\(([^\)]*)\): ([^{]*)/;
-const typeRegex = /export interface (.*) {\r?\n((?:.*?|\r?\n)*?)}/;
+const exportRegex = /export[\s]*function|export[\s]*async[\s]*function|export[\s]*interface|export[\s]*type/;
 function hasMatch(content) {
-    return !!(funcRegex.exec(content) || typeRegex.exec(content));
+    return !!exportRegex.exec(content);
 }
 function createHasExports(file, hasExports) {
     return {
         file: file.file,
-        hasExports: false
+        hasExports
     };
 }
 //# sourceMappingURL=getFileHasExports.js.map

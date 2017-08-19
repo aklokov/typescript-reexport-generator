@@ -16,9 +16,13 @@ function generateteReexportInDir(path, files) {
             return;
         }
         const filesWithExports = yield Promise.all(files.map(_1.getFileHasExports));
-        const lines = filesWithExports
+        const exportFiles = filesWithExports
             .filter(file => file.hasExports)
-            .map(file => stripExtension(file.file))
+            .map(file => stripExtension(file.file));
+        if (!exportFiles.length) {
+            return;
+        }
+        const lines = exportFiles
             .map(createReexport);
         const content = lines.join(_1.constants.linefeed) + _1.constants.linefeed;
         const indexPath = _1.combinePath(path, _1.constants.index);

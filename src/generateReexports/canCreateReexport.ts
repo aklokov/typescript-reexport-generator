@@ -9,7 +9,7 @@ export async function canCreateReexport(files: FileIsDir[]): Promise<boolean> {
   }
 
   const content = await fse.readFile(index.fullPath, 'utf8');
-  const lines = content.split(/\r?\n|;/);
+  const lines = content.split(/\r?\n|;/).filter(line => line.length);
   const onlyReexports = !lines.find(line => !reexportsOnly(line));
   return onlyReexports;
 }
@@ -17,5 +17,5 @@ export async function canCreateReexport(files: FileIsDir[]): Promise<boolean> {
 const reexportRegex = /(export \* from '[^\']*')/;
 function reexportsOnly(line: string): boolean {
   const match = reexportRegex.exec(line);
-  return match[1].trim() === line.trim();
+  return !!match && (match[1].trim() === line.trim());
 }

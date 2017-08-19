@@ -8,9 +8,13 @@ export async function generateteReexportInDir(path: string, files: FileIsDir[]):
   }
 
   const filesWithExports = await Promise.all(files.map(getFileHasExports));
-  const lines = filesWithExports
+  const exportFiles = filesWithExports
     .filter(file => file.hasExports)
-    .map(file => stripExtension(file.file))
+    .map(file => stripExtension(file.file));
+  if (!exportFiles.length) {
+    return;
+  }
+  const lines = exportFiles
     .map(createReexport);
   const content = lines.join(constants.linefeed) + constants.linefeed;
   const indexPath = combinePath(path, constants.index);
