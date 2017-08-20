@@ -1,4 +1,5 @@
 export * from './FileStatus';
+export * from './Options';
 export * from './canCreateReexport';
 export * from './combinePath';
 export * from './constants';

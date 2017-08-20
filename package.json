@@ -1,6 +1,6 @@
 {
   "name": "typescript-reexport-generator",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "generates index.ts with reexports",
   "files": [
     "build/src"

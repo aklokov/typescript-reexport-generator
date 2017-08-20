@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const _1 = require(".");
-function generateteReexportInDir(path, files) {
+function generateteReexportInDir(path, files, options) {
     return __awaiter(this, void 0, void 0, function* () {
         const canCreate = yield _1.canCreateReexport(files);
         if (!canCreate) {
@@ -24,7 +24,7 @@ function generateteReexportInDir(path, files) {
         }
         const lines = exportFiles
             .map(createReexport);
-        const content = lines.join(_1.constants.linefeed) + _1.constants.linefeed;
+        const content = lines.join(options.lineFeed) + options.lineFeed;
         const indexPath = _1.combinePath(path, _1.constants.index);
         yield _1.gracefulFileWrite(indexPath, content);
     });

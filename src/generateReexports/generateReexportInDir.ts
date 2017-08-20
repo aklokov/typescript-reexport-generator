@@ -1,7 +1,10 @@
-import { FileIsDir, getFileHasExports, canCreateReexport, constants, combinePath, gracefulFileWrite } from '.';
+import {
+  FileIsDir, getFileHasExports, canCreateReexport, constants,
+  combinePath, gracefulFileWrite, Options
+} from '.';
 import * as fse from 'fs-extra';
 
-export async function generateteReexportInDir(path: string, files: FileIsDir[]): Promise<void> {
+export async function generateteReexportInDir(path: string, files: FileIsDir[], options: Options): Promise<void> {
   const canCreate = await canCreateReexport(files);
   if (!canCreate) {
     return;
@@ -16,7 +19,7 @@ export async function generateteReexportInDir(path: string, files: FileIsDir[]):
   }
   const lines = exportFiles
     .map(createReexport);
-  const content = lines.join(constants.linefeed) + constants.linefeed;
+  const content = lines.join(options.lineFeed) + options.lineFeed;
   const indexPath = combinePath(path, constants.index);
   await gracefulFileWrite(indexPath, content);
 }

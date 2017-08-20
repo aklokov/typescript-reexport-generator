@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fse = require("fs-extra");
-const _1 = require(".");
 function isDirectory(path) {
     return __awaiter(this, void 0, void 0, function* () {
         const stats = yield fse.lstat(path);
@@ -17,22 +16,28 @@ function isDirectory(path) {
     });
 }
 exports.isDirectory = isDirectory;
+function needToWrite(path, content) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const exists = yield fse.pathExists(path);
+        if (!exists) {
+            return true;
+        }
+        const existing = yield fse.readFile(path, 'utf8');
+        return content !== existing;
+    });
+}
 function gracefulFileWrite(path, content) {
     return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const existing = yield fse.readFile(path, 'utf8');
-            if (existing === content) {
-                return;
-            }
-        }
-        catch (err) {
+        const need = yield needToWrite(path, content);
+        if (!need) {
+            return;
         }
         try {
             yield fse.writeFile(path, content);
             console.log('Written ' + path);
         }
         catch (err) {
-            console.log('Error writing ' + path + _1.constants.linefeed + err);
+            console.log('Error writing ' + path + '\n' + err);
         }
     });
 }
