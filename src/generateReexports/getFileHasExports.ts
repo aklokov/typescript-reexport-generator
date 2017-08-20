@@ -21,7 +21,7 @@ export async function getFileHasExports(file: FileIsDir): Promise<FileHasExports
 
 const funcRegex = /export[\s]*function|export[\s]*async[\s]*function/;
 const typeRegex = /export[\s]*interface|export[\s]*type|export[\s]*enum/;
-const constRegex = /export[\s]*const[\s]*[^\s]*[\s]*=[\s]*{/;
+const constRegex = /export[\s]*const[\s]*[^\s]*[\s]*=/;
 function hasMatch(content: string): boolean {
   const hasFunc = !!funcRegex.exec(content);
   const hasType = !!typeRegex.exec(content);
