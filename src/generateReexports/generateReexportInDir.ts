@@ -1,6 +1,6 @@
 import {
   FileIsDir, getFileHasExports, canCreateReexport, constants,
-  combinePath, gracefulFileWrite, Options
+  combinePath, gracefulWriteFile, Options
 } from '.';
 import * as fse from 'fs-extra';
 
@@ -21,7 +21,7 @@ export async function generateteReexportInDir(path: string, files: FileIsDir[], 
     .map(createReexport);
   const content = lines.join(options.lineFeed) + options.lineFeed;
   const indexPath = combinePath(path, constants.index);
-  await gracefulFileWrite(indexPath, content);
+  await gracefulWriteFile(indexPath, content);
 }
 
 function stripExtension(file: string): string {

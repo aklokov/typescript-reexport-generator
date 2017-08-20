@@ -26,7 +26,7 @@ function needToWrite(path, content) {
         return content !== existing;
     });
 }
-function gracefulFileWrite(path, content) {
+function gracefulWriteFile(path, content) {
     return __awaiter(this, void 0, void 0, function* () {
         const need = yield needToWrite(path, content);
         if (!need) {
@@ -41,5 +41,5 @@ function gracefulFileWrite(path, content) {
         }
     });
 }
-exports.gracefulFileWrite = gracefulFileWrite;
+exports.gracefulWriteFile = gracefulWriteFile;
 //# sourceMappingURL=extraFs.js.map

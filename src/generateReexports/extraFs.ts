@@ -15,7 +15,7 @@ async function needToWrite(path: string, content: string): Promise<boolean> {
   return content !== existing;
 }
 
-export async function gracefulFileWrite(path: string, content: string): Promise<void> {
+export async function gracefulWriteFile(path: string, content: string): Promise<void> {
   const need = await needToWrite(path, content);
   if (!need) {
     return;

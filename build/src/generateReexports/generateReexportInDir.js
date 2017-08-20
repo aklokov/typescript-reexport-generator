@@ -26,7 +26,7 @@ function generateteReexportInDir(path, files, options) {
             .map(createReexport);
         const content = lines.join(options.lineFeed) + options.lineFeed;
         const indexPath = _1.combinePath(path, _1.constants.index);
-        yield _1.gracefulFileWrite(indexPath, content);
+        yield _1.gracefulWriteFile(indexPath, content);
     });
 }
 exports.generateteReexportInDir = generateteReexportInDir;
