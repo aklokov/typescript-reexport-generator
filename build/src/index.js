@@ -1,5 +1,7 @@
 "use strict";
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
 Object.defineProperty(exports, "__esModule", { value: true });
-const generateReexports_1 = require("./generateReexports");
-generateReexports_1.generateReexports(process.env.path);
+__export(require("./generateReexports/generateReexports"));
 //# sourceMappingURL=index.js.map

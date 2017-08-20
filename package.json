@@ -1,8 +1,12 @@
 {
   "name": "typescript-reexport-generator",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "generates index.ts with reexports",
-  "main": "gulpfile.js",
+  "files": [
+    "build/src"
+  ],
+  "main": "build/src/index.js",
+  "typings": "build/src/index",
   "dependencies": {
     "fs-extra": "^4.0.1"
   },
