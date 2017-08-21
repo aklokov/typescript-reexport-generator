@@ -23,7 +23,7 @@ function getFileHasExports(file) {
 }
 exports.getFileHasExports = getFileHasExports;
 const funcRegex = /export[\s]*function|export[\s]*async[\s]*function/;
-const typeRegex = /export[\s]*interface|export[\s]*type|export[\s]*enum/;
+const typeRegex = /export[\s]*interface|export[\s]*type|export[\s]*enum|export[\s]*class/;
 const constRegex = /export[\s]*const[\s]*[^\s]*[\s]*=/;
 function hasMatch(content) {
     const hasFunc = !!funcRegex.exec(content);
