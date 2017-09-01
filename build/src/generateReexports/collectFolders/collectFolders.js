@@ -19,23 +19,16 @@ function collectFolders(path) {
         const folderPromises = folders.map(folder => collectFolders(tools_1.combinePath(path, folder)));
         const folderData = _.flatten(yield Promise.all(folderPromises));
         const thisFolder = getFolder(path, files, folders);
-        if (thisFolder) {
-            return [thisFolder, ...folderData];
-        }
-        return folderData;
+        return thisFolder ? [thisFolder, ...folderData] : folderData;
     });
 }
 exports.collectFolders = collectFolders;
 function getFolder(path, files, folders) {
-    const allTsFiles = files
-        .filter(file => !file.isDir)
-        .map(file => file.file)
-        .filter(file => isTsFile(file));
+    const allTsFiles = files.filter(file => !file.isDir).map(file => file.file).filter(file => isTsFile(file));
     if (!allTsFiles.length) {
         return null;
     }
-    const withoutIndex = allTsFiles
-        .filter(file => file !== constants_1.constants.index);
+    const withoutIndex = allTsFiles.filter(file => file !== constants_1.constants.index);
     return {
         path,
         index: allTsFiles.length > withoutIndex.length,

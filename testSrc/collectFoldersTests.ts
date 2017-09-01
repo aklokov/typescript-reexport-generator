@@ -2,8 +2,8 @@ import { collectFolders, Folder } from '../src/generateReexports/collectFolders'
 import { expect } from 'chai';
 import { toStringMap } from 'hash-map';
 
-describe('normalizePath', function (): void {
-  it('should replace back slashes', async function (): Promise<void> {
+describe('collectFolders', function (): void {
+  it('should correctly collect folders', async function (): Promise<void> {
     // arrange
     const expected: Folder[] = [{
       path: './testFolder',
