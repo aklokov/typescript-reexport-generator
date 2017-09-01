@@ -8,24 +8,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const _1 = require(".");
+const tools_1 = require("../../tools");
 const fse = require("fs-extra");
-function canCreateReexport(files) {
+function getFilesWithIsDir(path) {
     return __awaiter(this, void 0, void 0, function* () {
-        const index = files.find(file => !file.isDir && file.file === _1.constants.index);
-        if (!index) {
-            return true;
-        }
-        const content = yield fse.readFile(index.fullPath, 'utf8');
-        const lines = content.split(/\r?\n|;/).filter(line => line.length);
-        const onlyReexports = !lines.find(line => !reexportsOnly(line));
-        return onlyReexports;
+        const files = yield fse.readdir(path);
+        const results = yield Promise.all(files.map(file => getFileIsDir(path, file)));
+        return results;
     });
 }
-exports.canCreateReexport = canCreateReexport;
-const reexportRegex = /(export \* from '[^\']*')/;
-function reexportsOnly(line) {
-    const match = reexportRegex.exec(line);
-    return !!match && (match[1].trim() === line.trim());
+exports.getFilesWithIsDir = getFilesWithIsDir;
+function getFileIsDir(path, file) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const fullPath = tools_1.combinePath(path, file);
+        const isDir = yield tools_1.isDirectory(fullPath);
+        return {
+            file,
+            isDir
+        };
+    });
 }
-//# sourceMappingURL=canCreateReexport.js.map
+exports.getFileIsDir = getFileIsDir;
+//# sourceMappingURL=getFileIsDir.js.map

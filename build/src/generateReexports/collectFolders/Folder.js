@@ -1,3 +1,3 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-//# sourceMappingURL=FileStatus.js.map
+//# sourceMappingURL=Folder.js.map
