@@ -16,15 +16,10 @@ async function needToWrite(path: string, content: string): Promise<boolean> {
 }
 
 export async function gracefulWriteFile(path: string, content: string): Promise<void> {
-  const need = await needToWrite(path, content);
-  if (!need) {
+  if (!await needToWrite(path, content)) {
     return;
   }
 
-  try {
-    await fse.writeFile(path, content);
-    console.log('Written ' + path);
-  } catch (err) {
-    console.log('Error writing ' + path + '\n' + err);
-  }
+  console.log('Writing ' + path);
+  await fse.writeFile(path, content);
 }

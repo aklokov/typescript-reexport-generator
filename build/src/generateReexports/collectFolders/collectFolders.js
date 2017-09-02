@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const _1 = require(".");
-const tools_1 = require("../../tools");
+const tools_1 = require("../tools");
 const constants_1 = require("../constants");
 const _ = require("lodash");
 function collectFolders(path) {

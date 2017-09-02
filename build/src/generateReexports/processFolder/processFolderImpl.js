@@ -8,25 +8,31 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const tools_1 = require("../tools");
 const fse = require("fs-extra");
-function getFilesWithIsDir(path) {
+const _1 = require(".");
+const tools_1 = require("../tools");
+function canModifyIndex(folder) {
     return __awaiter(this, void 0, void 0, function* () {
-        const files = yield fse.readdir(path);
-        const results = yield Promise.all(files.map(file => getFileIsDir(path, file)));
-        return results;
+        if (!folder.index) {
+            return true;
+        }
+        const indexContent = yield fse.readFile(_1.indexPath(folder), 'utf8');
+        return _1.canOverwriteIndex(indexContent, folder.folders);
     });
 }
-exports.getFilesWithIsDir = getFilesWithIsDir;
-function getFileIsDir(path, file) {
+exports.canModifyIndex = canModifyIndex;
+function writeReexports(folder, files, options) {
     return __awaiter(this, void 0, void 0, function* () {
-        const fullPath = tools_1.combinePath(path, file);
-        const isDir = yield tools_1.isDirectory(fullPath);
-        return {
-            file,
-            isDir
-        };
+        yield tools_1.gracefulWriteFile(_1.indexPath(folder), _1.composeFile(files, options));
     });
 }
-exports.getFileIsDir = getFileIsDir;
-//# sourceMappingURL=getFileIsDir.js.map
+exports.writeReexports = writeReexports;
+function deleteIndex(folder) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const file = _1.indexPath(folder);
+        console.log('unlink ' + file);
+        yield fse.unlink(file);
+    });
+}
+exports.deleteIndex = deleteIndex;
+//# sourceMappingURL=processFolderImpl.js.map

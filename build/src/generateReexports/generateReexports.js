@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const _1 = require(".");
 const collectFolders_1 = require("./collectFolders");
+const processFolder_1 = require("./processFolder");
 const defaultOptions = {
     lineFeed: '\n'
 };
@@ -18,7 +19,7 @@ function generateReexports(path, options = {}) {
         const normalized = _1.normalizePath(path);
         options = Object.assign({}, defaultOptions, options);
         const folders = yield collectFolders_1.collectFolders(path);
-        return;
+        yield Promise.all(folders.map(folder => processFolder_1.processFolder(folder, options)));
     });
 }
 exports.generateReexports = generateReexports;

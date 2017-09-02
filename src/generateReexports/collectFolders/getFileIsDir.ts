@@ -1,4 +1,4 @@
-import { isDirectory, combinePath } from '../../tools';
+import { isDirectory, combinePath } from '../tools';
 import * as fse from 'fs-extra';
 
 export interface FileIsDir {

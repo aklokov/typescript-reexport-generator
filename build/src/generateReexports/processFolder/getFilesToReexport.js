@@ -8,25 +8,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const tools_1 = require("../tools");
 const fse = require("fs-extra");
-function getFilesWithIsDir(path) {
+const tools_1 = require("../tools");
+const _1 = require(".");
+function getFilesToReexport(folder) {
     return __awaiter(this, void 0, void 0, function* () {
-        const files = yield fse.readdir(path);
-        const results = yield Promise.all(files.map(file => getFileIsDir(path, file)));
-        return results;
+        const promises = folder.tsFiles.map(file => checkTsFile(folder.path, file));
+        const checked = yield Promise.all(promises);
+        return checked.filter(c => c);
     });
 }
-exports.getFilesWithIsDir = getFilesWithIsDir;
-function getFileIsDir(path, file) {
+exports.getFilesToReexport = getFilesToReexport;
+function checkTsFile(path, file) {
     return __awaiter(this, void 0, void 0, function* () {
-        const fullPath = tools_1.combinePath(path, file);
-        const isDir = yield tools_1.isDirectory(fullPath);
-        return {
-            file,
-            isDir
-        };
+        const content = yield fse.readFile(tools_1.combinePath(path, file), 'utf8');
+        return _1.containsReexports(content) ? file : null;
     });
 }
-exports.getFileIsDir = getFileIsDir;
-//# sourceMappingURL=getFileIsDir.js.map
+//# sourceMappingURL=getFilesToReexport.js.map

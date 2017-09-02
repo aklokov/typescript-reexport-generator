@@ -1,2 +1,2 @@
-import { Folder } from '..';
+import { Folder } from '.';
 export declare function collectFolders(path: string): Promise<Folder[]>;

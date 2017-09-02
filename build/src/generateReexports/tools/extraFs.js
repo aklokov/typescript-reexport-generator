@@ -28,17 +28,11 @@ function needToWrite(path, content) {
 }
 function gracefulWriteFile(path, content) {
     return __awaiter(this, void 0, void 0, function* () {
-        const need = yield needToWrite(path, content);
-        if (!need) {
+        if (!(yield needToWrite(path, content))) {
             return;
         }
-        try {
-            yield fse.writeFile(path, content);
-            console.log('Written ' + path);
-        }
-        catch (err) {
-            console.log('Error writing ' + path + '\n' + err);
-        }
+        console.log('Writing ' + path);
+        yield fse.writeFile(path, content);
     });
 }
 exports.gracefulWriteFile = gracefulWriteFile;

@@ -1,8 +1,8 @@
-import { canReexport } from '../src/generateReexports/canReexport';
-import { Folder } from '../src/generateReexports';
+import { canOverwriteIndex } from '../src/generateReexports/processFolder';
+import { Folder } from '../src/generateReexports/collectFolders';
 import { expect } from 'chai';
 
-describe('canReexport', function (): void {
+describe('canOverwriteIndex', function (): void {
   it('should return false if dir is reexported', async function (): Promise<void> {
     // arrange
     const index = `
@@ -12,7 +12,7 @@ describe('canReexport', function (): void {
     const folders = ['anotherDir', 'someDir'];
 
     // act
-    const result = canReexport(index, folders);
+    const result = canOverwriteIndex(index, folders);
 
     // assert
     expect(result).to.be.equal(false);
@@ -28,7 +28,7 @@ describe('canReexport', function (): void {
     const folders = ['anotherDir', 'someDir'];
 
     // act
-    const result = canReexport(index, folders);
+    const result = canOverwriteIndex(index, folders);
 
     // assert
     expect(result).to.be.equal(true);
@@ -41,7 +41,7 @@ describe('canReexport', function (): void {
     const folders = ['anotherDir', 'someDir'];
 
     // act
-    const result = canReexport(index, folders);
+    const result = canOverwriteIndex(index, folders);
 
     // assert
     expect(result).to.be.equal(false);
@@ -56,7 +56,7 @@ describe('canReexport', function (): void {
     const folders = ['anotherDir', 'someDir'];
 
     // act
-    const result = canReexport(index, folders);
+    const result = canOverwriteIndex(index, folders);
 
     // assert
     expect(result).to.be.equal(false);
@@ -71,7 +71,7 @@ describe('canReexport', function (): void {
     const folders = ['anotherDir', 'someDir'];
 
     // act
-    const result = canReexport(index, folders);
+    const result = canOverwriteIndex(index, folders);
 
     // assert
     expect(result).to.be.equal(false);

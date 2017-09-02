@@ -8,25 +8,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const tools_1 = require("../tools");
-const fse = require("fs-extra");
-function getFilesWithIsDir(path) {
+const _1 = require(".");
+function processFolder(folder, options) {
     return __awaiter(this, void 0, void 0, function* () {
-        const files = yield fse.readdir(path);
-        const results = yield Promise.all(files.map(file => getFileIsDir(path, file)));
-        return results;
+        if (!(yield _1.canModifyIndex(folder))) {
+            return;
+        }
+        const files = yield _1.getFilesToReexport(folder);
+        if (files.length) {
+            yield _1.writeReexports(folder, files, options);
+        }
+        else if (folder.index) {
+            yield _1.deleteIndex(folder);
+        }
     });
 }
-exports.getFilesWithIsDir = getFilesWithIsDir;
-function getFileIsDir(path, file) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const fullPath = tools_1.combinePath(path, file);
-        const isDir = yield tools_1.isDirectory(fullPath);
-        return {
-            file,
-            isDir
-        };
-    });
-}
-exports.getFileIsDir = getFileIsDir;
-//# sourceMappingURL=getFileIsDir.js.map
+exports.processFolder = processFolder;
+//# sourceMappingURL=processFolder.js.map

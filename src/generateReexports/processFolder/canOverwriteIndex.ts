@@ -1,6 +1,4 @@
-import { Folder } from '..';
-
-export function canReexport(indexContents: string, folders: string[]): boolean {
+export function canOverwriteIndex(indexContents: string, folders: string[]): boolean {
   const lines = indexContents.split(/\r?\n|;/)
     .map(line => line.trim())
     .filter(line => line.length);
