@@ -1,37 +1,79 @@
-import { normalizePath } from '../src/generateReexports';
+import { canReexport } from '../src/generateReexports/canReexport';
+import { Folder } from '../src/generateReexports';
 import { expect } from 'chai';
 
-describe('normalizePath', function (): void {
-  it('should replace back slashes', async function (): Promise<void> {
+describe('canReexport', function (): void {
+  it('should return false if dir is reexported', async function (): Promise<void> {
     // arrange
-    const src = '.\\a\\b';
+    const index = `
+    export * from './someFile';
+    export * from './someDir';
+    `;
+    const folders = ['anotherDir', 'someDir'];
 
     // act
-    const result = normalizePath(src);
+    const result = canReexport(index, folders);
 
     // assert
-    expect(result).to.be.equal('./a/b');
+    expect(result).to.be.equal(false);
   });
 
-  it('should not touch right slashes', async function (): Promise<void> {
+  it('should return true if files are reexported with and without semicolon', async function (): Promise<void> {
     // arrange
-    const src = './a/b';
+    const index = `
+    export * from './someFile';
+    export * from './someFile2'
+    export * from './someFile3';
+`;
+    const folders = ['anotherDir', 'someDir'];
 
     // act
-    const result = normalizePath(src);
+    const result = canReexport(index, folders);
 
     // assert
-    expect(result).to.be.equal('./a/b');
+    expect(result).to.be.equal(true);
   });
 
-  it('should not trim trailing slash', async function (): Promise<void> {
+  it('should return false if something else is present', async function (): Promise<void> {
     // arrange
-    const src = './a/b/';
+    const index = `export * from './someFile';
+    let a = 1;`;
+    const folders = ['anotherDir', 'someDir'];
 
     // act
-    const result = normalizePath(src);
+    const result = canReexport(index, folders);
 
     // assert
-    expect(result).to.be.equal('./a/b');
+    expect(result).to.be.equal(false);
+  });
+
+  it('should return false if step-out-of-folder is present', async function (): Promise<void> {
+    // arrange
+    const index = `
+    export * from './someFile';
+    export * from '../someFile2';
+    `;
+    const folders = ['anotherDir', 'someDir'];
+
+    // act
+    const result = canReexport(index, folders);
+
+    // assert
+    expect(result).to.be.equal(false);
+  });
+
+  it('should return false if composite path is present', async function (): Promise<void> {
+    // arrange
+    const index = `
+    export * from './someFile';
+    export * from './some/File2';
+    `;
+    const folders = ['anotherDir', 'someDir'];
+
+    // act
+    const result = canReexport(index, folders);
+
+    // assert
+    expect(result).to.be.equal(false);
   });
 });

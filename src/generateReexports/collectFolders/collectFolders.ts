@@ -1,4 +1,5 @@
-import { Folder, getFilesWithIsDir, FileIsDir } from '.';
+import { Folder } from '..';
+import { getFilesWithIsDir, FileIsDir } from '.';
 import { combinePath } from '../../tools';
 import { constants } from '../constants';
 import * as fse from 'fs-extra';

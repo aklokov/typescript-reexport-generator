@@ -1,4 +1,5 @@
-import { collectFolders, Folder } from '../src/generateReexports/collectFolders';
+import { collectFolders } from '../src/generateReexports/collectFolders';
+import { Folder } from '../src/generateReexports';
 import { expect } from 'chai';
 import { toStringMap } from 'hash-map';
 
