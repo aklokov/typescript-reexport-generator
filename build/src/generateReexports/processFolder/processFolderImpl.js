@@ -30,7 +30,7 @@ exports.writeReexports = writeReexports;
 function deleteIndex(folder) {
     return __awaiter(this, void 0, void 0, function* () {
         const file = _1.indexPath(folder);
-        console.log('unlink ' + file);
+        console.log('Unlinking ' + file);
         yield fse.unlink(file);
     });
 }
