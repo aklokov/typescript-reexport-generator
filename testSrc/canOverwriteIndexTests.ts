@@ -1,5 +1,4 @@
-import { canOverwriteIndex } from '../src/generateReexports/processFolder';
-import { Folder } from '../src/generateReexports/collectFolders';
+import { canOverwriteIndex } from '../src/generateReexports/parseFolder';
 import { expect } from 'chai';
 
 describe('canOverwriteIndex', function (): void {
@@ -9,10 +8,10 @@ describe('canOverwriteIndex', function (): void {
     export * from './someFile';
     export * from './someDir';
     `;
-    const folders = ['anotherDir', 'someDir'];
+    const files = ['someFile', 'someFile2'];
 
     // act
-    const result = canOverwriteIndex(index, folders);
+    const result = canOverwriteIndex(index, files);
 
     // assert
     expect(result).to.be.equal(false);
@@ -25,10 +24,10 @@ describe('canOverwriteIndex', function (): void {
     export * from './someFile2'
     export * from './someFile3';
 `;
-    const folders = ['anotherDir', 'someDir'];
+    const files = ['someFile', 'someFile2', 'someFile3'];
 
     // act
-    const result = canOverwriteIndex(index, folders);
+    const result = canOverwriteIndex(index, files);
 
     // assert
     expect(result).to.be.equal(true);
@@ -38,10 +37,10 @@ describe('canOverwriteIndex', function (): void {
     // arrange
     const index = `export * from './someFile';
     let a = 1;`;
-    const folders = ['anotherDir', 'someDir'];
+    const files = ['someFile', 'someFile2'];
 
     // act
-    const result = canOverwriteIndex(index, folders);
+    const result = canOverwriteIndex(index, files);
 
     // assert
     expect(result).to.be.equal(false);
@@ -53,10 +52,10 @@ describe('canOverwriteIndex', function (): void {
     export * from './someFile';
     export * from '../someFile2';
     `;
-    const folders = ['anotherDir', 'someDir'];
+    const files = ['someFile', 'someFile2'];
 
     // act
-    const result = canOverwriteIndex(index, folders);
+    const result = canOverwriteIndex(index, files);
 
     // assert
     expect(result).to.be.equal(false);
@@ -68,10 +67,10 @@ describe('canOverwriteIndex', function (): void {
     export * from './someFile';
     export * from './some/File2';
     `;
-    const folders = ['anotherDir', 'someDir'];
+    const files = ['someFile', 'someFile2'];
 
     // act
-    const result = canOverwriteIndex(index, folders);
+    const result = canOverwriteIndex(index, files);
 
     // assert
     expect(result).to.be.equal(false);

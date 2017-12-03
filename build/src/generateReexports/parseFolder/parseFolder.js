@@ -8,17 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const ts_files_helper_1 = require("ts-files-helper");
-const parseFolder_1 = require("./parseFolder");
-const defaultOptions = {
-    lineFeed: '\n'
-};
-function generateReexports(globs, options = {}) {
+function parseFolder(folder) {
     return __awaiter(this, void 0, void 0, function* () {
-        options = Object.assign({}, defaultOptions, options);
-        const folders = yield ts_files_helper_1.collectFolders(globs);
-        const models = yield Promise.all(folders.map(parseFolder_1.parseFolder));
+        return null;
     });
 }
-exports.generateReexports = generateReexports;
-//# sourceMappingURL=generateReexports.js.map
+exports.parseFolder = parseFolder;
+//# sourceMappingURL=parseFolder.js.map
