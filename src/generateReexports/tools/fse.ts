@@ -11,7 +11,7 @@ async function needToWrite(path: string, content: string): Promise<boolean> {
     return true;
   }
 
-  const existing = await fse.readFile(path, 'utf8');
+  const existing = await readFile(path);
   return content !== existing;
 }
 
@@ -21,5 +21,13 @@ export async function gracefulWriteFile(path: string, content: string): Promise<
   }
 
   console.log('Writing ' + path);
-  await fse.writeFile(path, content);
+  await writeFile(path, content);
+}
+
+export async function readFile(file: string): Promise<string> {
+  return fse.readFile(file, 'utf8');
+}
+
+export async function writeFile(file: string, content: string): Promise<void> {
+  await fse.writeFile(file, content);
 }

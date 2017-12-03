@@ -1,8 +1,7 @@
 import { Folder } from 'ts-files-helper';
 import { ParsedFolder } from './parsedFolder';
-import { contains, combinePath, stripExtension } from '../tools';
+import { contains, combinePath, stripExtension, readFile } from '../tools';
 import { canOverwriteIndex } from './canOverwriteIndex';
-import * as fse from 'fs-extra';
 const indexFile = 'index.ts';
 
 export async function createEmptyFolder(folder: Folder): Promise<ParsedFolder> {
@@ -16,7 +15,7 @@ export async function createEmptyFolder(folder: Folder): Promise<ParsedFolder> {
   }
 
   const path = combinePath(folder.path, indexFile);
-  const indexContent = await fse.readFile(path, 'utf8');
+  const indexContent = await readFile(path);
   const files = folder.files.map(stripExtension);
   return {
     path: folder.path,

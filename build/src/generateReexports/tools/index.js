@@ -4,7 +4,7 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./combinePath"));
-__export(require("./extraFs"));
+__export(require("./fse"));
 __export(require("./contains"));
 __export(require("./stripExtension"));
 //# sourceMappingURL=index.js.map

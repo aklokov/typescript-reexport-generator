@@ -11,7 +11,7 @@ async function needToWrite(path, content) {
     if (!exists) {
         return true;
     }
-    const existing = await fse.readFile(path, 'utf8');
+    const existing = await readFile(path);
     return content !== existing;
 }
 async function gracefulWriteFile(path, content) {
@@ -19,7 +19,15 @@ async function gracefulWriteFile(path, content) {
         return;
     }
     console.log('Writing ' + path);
-    await fse.writeFile(path, content);
+    await writeFile(path, content);
 }
 exports.gracefulWriteFile = gracefulWriteFile;
-//# sourceMappingURL=extraFs.js.map
+async function readFile(file) {
+    return fse.readFile(file, 'utf8');
+}
+exports.readFile = readFile;
+async function writeFile(file, content) {
+    await fse.writeFile(file, content);
+}
+exports.writeFile = writeFile;
+//# sourceMappingURL=fse.js.map

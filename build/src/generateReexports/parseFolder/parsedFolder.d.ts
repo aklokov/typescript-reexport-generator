@@ -6,5 +6,6 @@ export interface ParsedFolder {
 }
 export interface ParsedFile {
     name: string;
+    hasExports: boolean;
     imports: Import[];
 }
