@@ -1,17 +1,13 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-function parseFolder(folder) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return null;
-    });
+const createEmptyFolder_1 = require("./createEmptyFolder");
+const parseFile_1 = require("./parseFile");
+async function parseFolder(folder) {
+    const [emptyFolder, files] = await Promise.all([createEmptyFolder_1.createEmptyFolder(folder), parseFiles(folder)]);
+    return Object.assign({}, emptyFolder, { files });
 }
 exports.parseFolder = parseFolder;
+async function parseFiles(folder) {
+    return Promise.all(folder.files.map(file => parseFile_1.parseFile(folder.path, file)));
+}
 //# sourceMappingURL=parseFolder.js.map

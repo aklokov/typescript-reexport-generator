@@ -3,10 +3,10 @@ import { Import } from 'ts-files-helper';
 export interface ParsedFolder {
   path: string;
   canWriteIndex: boolean;
-  files: FolderFile[];
+  files: ParsedFile[];
 }
 
-export interface FolderFile {
+export interface ParsedFile {
   name: string;
   imports: Import[];
 }
