@@ -11,3 +11,5 @@ function onlyReexport(line: string, files: string[]): boolean {
   const match = reexportRegex.exec(line);
   return !!match && (match[1] === line) && (files.includes(match[2]));
 }
+
+

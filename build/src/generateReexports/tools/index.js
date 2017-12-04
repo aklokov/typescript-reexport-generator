@@ -7,4 +7,6 @@ __export(require("./combinePath"));
 __export(require("./fse"));
 __export(require("./contains"));
 __export(require("./stripExtension"));
+__export(require("./flatMap"));
+__export(require("./execRegex"));
 //# sourceMappingURL=index.js.map

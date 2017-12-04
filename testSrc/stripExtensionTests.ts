@@ -1,7 +1,7 @@
 import { stripExtension } from '../src/generateReexports/tools';
 import { expect } from 'chai';
 
-describe('canOverwriteIndex', function (): void {
+describe('stripExtension', function (): void {
   it('should return file as is if no extension', async function (): Promise<void> {
     // arrange
     const file = 'file';
