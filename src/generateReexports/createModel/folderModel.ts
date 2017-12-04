@@ -11,6 +11,6 @@ export interface FileModel {
   folder: string;
   name: string;
   hasExports: boolean;
-  imports: Import[];
+  references: string[];
   importedIds: string[];
 }

@@ -1,4 +1,3 @@
-import { Import } from 'ts-files-helper';
 export interface ParsedFolder {
     path: string;
     canWriteIndex: boolean;
@@ -7,5 +6,5 @@ export interface ParsedFolder {
 export interface ParsedFile {
     name: string;
     hasExports: boolean;
-    imports: Import[];
+    references: string[];
 }

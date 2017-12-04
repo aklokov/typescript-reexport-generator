@@ -22,7 +22,7 @@ function createFile(file, folder) {
         folder: folder.path,
         name,
         hasExports: file.hasExports,
-        imports: file.imports,
+        references: file.references,
         importedIds: null
     };
 }

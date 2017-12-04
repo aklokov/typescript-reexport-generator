@@ -3,17 +3,13 @@ import { FolderModel, FileModel } from './folderModel';
 import { combinePath, stripExtension } from '../tools';
 import { populateImportedIds } from './populateImportedIds';
 
-export function createEmptyFolderModels(folders: ParsedFolder[]): FolderModel[] {
-  return folders.map(folder => ({ id: folder.path, canWriteIndex: folder.canWriteIndex, files: null }));
-}
-
-export function createFiles(folders: ParsedFolder[]): FileModel[] {
-  let files: FileModel[] = [];
-  folders.forEach(folder => {
-    const models = folder.files.map(file => createFile(file, folder));
-    files = [...files, ...models];
-  });
-  return populateImportedIds(files);
+export function createFolder(folder: ParsedFolder): FolderModel {
+  const files = folder.files.map(file => createFile(file, folder));
+  return {
+    id: folder.path,
+    canWriteIndex: folder.canWriteIndex,
+    files
+  };
 }
 
 function createFile(file: ParsedFile, folder: ParsedFolder): FileModel {
@@ -23,7 +19,7 @@ function createFile(file: ParsedFile, folder: ParsedFolder): FileModel {
     folder: folder.path,
     name,
     hasExports: file.hasExports,
-    imports: file.imports,
+    references: file.references,
     importedIds: null
   };
 }
