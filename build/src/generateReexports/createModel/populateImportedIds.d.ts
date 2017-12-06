@@ -1,2 +1,2 @@
-import { FileModel } from './folderModel';
-export declare function populateImportedIds(files: FileModel[]): FileModel[];
+import { FolderModel } from './folderModel';
+export declare function populateImportedIds(folders: FolderModel[]): FolderModel[];

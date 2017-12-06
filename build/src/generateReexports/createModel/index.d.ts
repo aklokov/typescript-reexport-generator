@@ -1,2 +1,2 @@
-export * from './createModel';
+export * from './createModels';
 export * from './folderModel';

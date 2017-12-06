@@ -23,6 +23,22 @@ function populateIdsInFile(file: FileModel, folders: StringMap<FolderModel>, fil
   };
 }
 
+const index = 'index';
 function getReferencedIds(ref: string, file: FileModel, folders: StringMap<FolderModel>, files: StringMap<FileModel>): string[] {
+  const refFile = files[ref];
+  if (refFile) {
+    return [refFile.id];
+  }
 
+  const refFolder = folders[ref];
+  if (refFolder) {
+
+    if (refFolder.canWriteIndex) {
+      return refFolder.files.filter(file => file.name !== index).map(file => file.id);
+    } else {
+      return refFolder.files.filter(file => file.name === index).map(file => file.id);
+    }
+  }
+
+  return [];
 }
